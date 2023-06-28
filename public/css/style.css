@@ -1,0 +1,68 @@
+body {
+    background-color: #FFE6C7;
+}
+
+.logo_login {
+    display: block;
+    width: 20rem; 
+    margin: auto; 
+    margin-top: 4rem;
+}
+
+
+.card {
+    margin-top: 3rem;
+}
+
+.slogan{
+    text-align: center;
+}
+
+
+.logo-home {
+    display: inline-block;
+    font-size: inherit;
+    height: 3rem;
+    margin: 0.5rem 0 0 1rem;
+}
+
+
+.buttonMenu {
+    display: block;
+    height: 7rem;
+    width: 7rem;
+    margin: auto;
+    margin-top: 1rem;
+    gap: 10rem;
+}
+
+.buttonText {
+    margin-top: 3rem;
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.buttonLink {
+    color: #000;
+}
+.buttonLink:hover {
+    color: #FF6600;
+    text-decoration: none;
+}        
+
+.buttonSair {
+    color:#000;
+    background-color: #FF6600;
+    border-radius:4px;
+    float: right;            
+    cursor:pointer;
+    font-weight:bold;
+    padding:0.2rem 2rem;
+    margin: 0.6rem 0.5rem;
+}
+
+.buttonSair:hover {
+    color:aliceblue;
+    text-decoration: none;         
+}

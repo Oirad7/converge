@@ -1,0 +1,33 @@
+{
+  "name": "converge",
+  "version": "1.0.0",
+  "description": "CRM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oirad7/converge.git"
+  },
+  "author": "Dario Aquino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oirad7/converge/issues"
+  },
+  "homepage": "https://github.com/Oirad7/converge#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "latest-version": "^7.0.0",
+    "mysql2": "^3.4.2",
+    "sequelize": "^6.32.1",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}

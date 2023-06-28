@@ -1,0 +1,28 @@
+<%- include('./partials/header.ejs') %>
+
+<body>
+
+
+        <div class="logo_login">
+            <img src="/images/logoConverge.svg" alt="logotipo" >
+
+            <h1 class="slogan">CRM</h1>
+            <h3 class="slogan"> Na Medida Certa</h3>
+            <div class="card" mt-5>
+                <div class="card-header">
+                    <h2>Login</h2>
+                </div>
+                <div class="card-body">
+                    <form action="/authenticate" method="POST">
+                        <input class="form-control" name="email" placeholder="e-mail"><br>
+                        <input class="form-control" name="senha" type="password" placeholder="senha"><br>
+                        <button type="submit" class="btn btn-success btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+    
+        <div>
+
+</body>
+
+<%- include('partials/footer.ejs') %>
