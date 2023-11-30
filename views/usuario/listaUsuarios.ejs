@@ -7,12 +7,13 @@
     <h3 class="row d-flex justify-content-center">Gerenciamento de Usuários</h3>
 
 
-    <table class="table table-bordered table-striped table-hover table-sm">
+    <table class="table table-bordered table-striped table-hover table-sm mx-auto" style="width: 90%;">
         <thead>
             <tr>
-                <th>Código</th>
-                <th>Nome</th>
-                <th>E-mail</th>
+                <th style="text-align: center;width: 5%;" >Código</th>
+                <th style="text-align: center;width: 40%;" >Nome</th>
+                <th style="text-align: center;width: 40%;" >E-mail</th>
+                <th style="text-align: center;width: 15%;" >Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +22,16 @@
                 <tr>
                     <td> <%= usuario.codigo %> </td>
                     <td> <%= usuario.nome %>  </td>
-                    <td> <%= usuario.email %> </td>            
+                    <td> <%= usuario.email %> </td>        
+                    <td>
+                        <a href="/usuario/editar/<%= usuario.codigo %>" class="btn btn-warning">Editar</a>
+
+                        <form method="POST" action="/usuario/excluir/" style="display: inline;" onsubmit="confirmDelete(event, this)">
+                            <input type="hidden" name="id" value="<%= usuario.codigo %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>                        
+                    </td>    
                 </tr>
         <% }) %>
 
@@ -32,7 +42,7 @@
     <div class="row d-flex justify-content-center">
 
         <a href="/usuario/cadastro"><i class="bi bi-plus-circle" style="font-size: 2rem; color: black"></i>&nbsp;&nbsp;</a>
-        <a href="!#"><i class="bi bi-search" style="font-size: 2rem; color: black "></i>&nbsp;&nbsp;</a>
+        <a href="!#"><i class="bi bi-search"  data-toggle="modal" data-target="#modalBusca" style="font-size: 2rem; color: black "></i>&nbsp;&nbsp;</a>
         <% if (resultado.pagina >= 2) { %>
             <a href="/usuario/listar/page/1"><i class="bi bi-chevron-bar-left" style="font-size: 2rem; color: black "></i></a>    
             <a href="/usuario/listar/page/<%- resultado.pagina - 1 %>"><i class="bi bi-chevron-left" style="font-size: 2rem; color: black "></i></a>    
@@ -44,6 +54,36 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalBusca" tabindex="-1" role="dialog" aria-labelledby="Buscar usuário" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
  
 <%- include('../partials/footer.ejs') %>    
 
+<script>
+    
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este usuário?");
+        if(decision){
+            form.submit();
+        }
+    }
+</script>

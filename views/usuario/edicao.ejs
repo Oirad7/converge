@@ -3,23 +3,23 @@
 
 <body>
     <div class="container">
-        <h3 class="row d-flex justify-content-center">Cadastro de Usuários</h3>
+        <h3 class="row d-flex justify-content-center">Edição de Usuários</h3>
         <div class="card=body col-4 mt-3 ml-auto mr-auto">   
-            <form action="/usuario/adicionar" method="post">
+            <form action="/usuario/atualizar/<%= usuario.codigo %>" method="post">
                 <div class="form-group">
                     <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="nome" required>
+                    <input type="text" class="form-control" id="nome" name="nome" value="<%= usuario.nome %>" required>
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<%= usuario.email %>"required>
                 </div>
                 <div class="form-group">
-                    <label for="senha">Senha (8 caracteres):</label>
+                    <label for="senha">nova Senha (8 caracteres):</label>
                     <input type="password" class="form-control" id="senha" name="senha" minlength="8" maxlength="8">
                 </div>
                 <div class="form-group">
-                    <label for="senhaRepetir">Repetir Senha:</label>
+                    <label for="senhaRepetir">Repetir nova Senha:</label>
                     <input type="password" class="form-control" id="senhaRepetir" name="senhaRepetir" minlength="8" maxlength="8" required>
                 </div>
 
@@ -27,11 +27,19 @@
                     <label>Tipo de Usuário:&nbsp;&nbsp;</label>
                     
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="usuarioCol" id="gerente" value="gerente" required>
+                        <input class="form-check-input" type="radio" name="usuarioCol" id="gerente" value="gerente" 
+                            <% if(usuario.usuarioCol == "gerente") { %>
+                                checked
+                            <% } %>
+                            required>
                         <label class="form-check-label" for="gerente">Gerente</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="usuarioCol" id="vendedor" value="vendedor" required>
+                        <input class="form-check-input" type="radio" name="usuarioCol" id="vendedor" value="vendedor" 
+                            <% if(usuario.usuarioCol == "vendedor") { %>
+                                checked
+                            <% } %>
+                        required>
                         <label class="form-check-label" for="vendedor">Vendedor</label>
                     </div>
                 </div>
@@ -39,7 +47,6 @@
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>            
 
-            <%# aviso pós validação no backend %>
             <% if (mensagem) { %>
                 
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">

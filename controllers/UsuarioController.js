@@ -6,18 +6,56 @@ const bcrypt = require("bcryptjs");
 
 
 
-router.get('/usuario/cadastro', (req, res) => {
+    router.get('/usuario/cadastro', (req, res) => {
         console.log("usuario cadastro");
         res.render("./usuario/cadastro.ejs",{mensagem: ""});
     });
 
-    //editar:
+    // ******************* editar:
+    router.get('/usuario/editar/:codigo', (req, res) => {
+        console.log("usuario edição");
 
-    //excluir:
+        var codigo = req.params.codigo;
 
-    //buscar:
+        Usuario.findByPk(codigo).then( usuario => {
+            if( usuario != undefined) {
+                res.render("./usuario/edicao.ejs",{mensagem: "", usuario: usuario});
+            }else {
+                res.render("/usuario/listar/page/:num");
+            }
+        }).catch(err => {
+            console.log(err);
+            res.render("/usuario/listar/page/:num");
+        })
+    });
 
+    // ******************* excluir:
+    router.post('/usuario/excluir', (req, res) => {
+        console.log("usuario delete");
 
+            var id = req.body.id;
+
+            if(id != undefined){
+                if(!isNaN(id)){
+                    Usuario.destroy({
+                        where: {
+                        codigo: id
+                        }
+                    }).then(() => {
+                        res.redirect("/usuario/listar/page/1");
+                    })
+                }else{
+                    res.redirect("/usuario/listar/page/1");
+                }
+            }else {
+                res.redirect("/usuario/listar/page/1");
+            }
+    });        
+
+    // ******************* buscar:
+
+  
+    // ******************* paginação
     router.get("/usuario/listar/page/:num", (req, res) => {
             var pagina = req.params.num;
             var offset = 0;
@@ -47,7 +85,6 @@ router.get('/usuario/cadastro', (req, res) => {
                     usuarios: usuarios
                 }
 
-                console.log(resultado);
                 res.render("usuario/listaUsuarios", {resultado:resultado});
             })
 
@@ -55,14 +92,7 @@ router.get('/usuario/cadastro', (req, res) => {
         });
                 
 
-/*
-        Usuario.findAll().then( usuarios => {
-            res.render("usuario/listaUsuarios",{ usuarios: usuarios});
-        });    
-    });
-*/
-    
-
+    // ******************* adicionar
     router.post("/usuario/adicionar", (req, res) => {
         var nome = req.body.nome;
         var email = req.body.email;
@@ -70,15 +100,11 @@ router.get('/usuario/cadastro', (req, res) => {
         var senha2 = req.body.senhaRepetir;
         var usuarioCol = req.body.usuarioCol;
     
-        console.log(req.body);
-        
         Usuario.findOne({where:{email: email}}).then( usuario => {
             if(usuario == undefined){
     
                 var salt = bcrypt.genSaltSync(10);
                 var hash = bcrypt.hashSync(senha, salt);
-    
-                console.log(hash);
                 
                 Usuario.create({
                     nome: nome,
@@ -101,68 +127,39 @@ router.get('/usuario/cadastro', (req, res) => {
     });
 
 
-/*
-router.get("/admin/users", (req, res) => {
-    User.findAll().then( users => {
-        res.render("admin/users/index",{ users: users})
-    })
-});
+    // ******************* atualizar
+    router.post("/usuario/atualizar/:codigo", (req, res) => {
+        var codigo = req.params.codigo;
+        var nome = req.body.nome;
+        var email = req.body.email;
+        var senha = req.body.senha;
+        var senha2 = req.body.senhaRepetir;
+        var usuarioCol = req.body.usuarioCol;
 
-router.get("/admin/users/create", (req, res) => {
-    res.render("admin/users/create");
-});
-
-*/
-
-
-
-/*
-router.get("/login", (req,res) => {
-    res.render("admin/users/login");
-});
-
-
-
-router.post("/authenticate", (req, res) => {
-
-    var email = req.body.email;
-    var senha = req.body.senha;
-
-    console.log("email:"+email+"  "+"senha:"+senha);
-
-
-    Usuario.findOne({
-        where:{email: email}
-    }).then(Usuario => {
-        if(Usuario != undefined){ // Se existe um usuário com esse e-mail
-            // Validar senha
-
-            var correct = bcrypt.compareSync(senha,Usuario.senha);
-
-            if(correct){
-                req.session.user = {
-                    nome: Usuario.nome,
-                    email: Usuario.email
-                }
-                res.redirect("/home");
-            }else{
-                res.redirect("/login"); 
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(senha, salt);
+    
+        Usuario.update({
+            codigo: codigo,
+            nome : nome,
+            email : email,
+            senha : hash, 
+            usuarioCol : usuarioCol,
+        },{
+            where: {
+                codigo: codigo
             }
+        }).then(() => {
+            res.redirect("/usuario/listar/page/1");
+        }).catch(err => {
+            console.log("erro: "+err);
+            res.render('./usuario/editar/<% usuario.codigo %>', {mensagem:"ocorreu um erro: "+ err});
+        });
 
-        }else{
-            res.redirect("/login");
-        }
+
     });
 
-});
 
-
-
-router.get("/logout", (req, res) => {
-    req.session.user = undefined;
-    res.redirect("/");
-})
-*/
 
 
 module.exports = router;
