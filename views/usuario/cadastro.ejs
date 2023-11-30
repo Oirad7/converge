@@ -1,0 +1,80 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+
+<body>
+    <div class="container">
+        <h3 class="row d-flex justify-content-center">Cadastro de Usuários</h3>
+        <div class="card=body col-4 mt-3 ml-auto mr-auto">   
+            <form action="/usuario/adicionar" method="post">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha (8 caracteres):</label>
+                    <input type="password" class="form-control" id="senha" name="senha" minlength="8" maxlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="senhaRepetir">Repetir Senha:</label>
+                    <input type="password" class="form-control" id="senhaRepetir" name="senhaRepetir" minlength="8" maxlength="8" required>
+                </div>
+
+                <div class="form-group text-center">
+                    <label>Tipo de Usuário:&nbsp;&nbsp;</label>
+                    
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="usuarioCol" id="gerente" value="gerente" required>
+                        <label class="form-check-label" for="gerente">Gerente</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="usuarioCol" id="vendedor" value="vendedor" required>
+                        <label class="form-check-label" for="vendedor">Vendedor</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>            
+
+            <% if (mensagem) { %>
+                
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Atenção!</strong> <%= mensagem %>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              <% } %>
+
+        </div>
+
+    </div>
+
+
+    <!-- script de validação do formulário -->
+    <script>
+        var senha = document.getElementById("senha")
+        , senhaRepetir = document.getElementById("senhaRepetir");
+
+        function validarSenha(){
+        if(senha.value != senhaRepetir.value) {
+            senhaRepetir.setCustomValidity("Senhas diferentes!");
+        } else {
+            senhaRepetir.setCustomValidity('');
+        }
+        }
+
+        senha.onchange = validarSenha;
+        senhaRepetir.onkeyup = validarSenha;
+    </script>
+
+
+
+</body>
+
+ 
+<%- include('../partials/footer.ejs') %>
+

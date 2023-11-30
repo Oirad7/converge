@@ -4,24 +4,24 @@ const connection = require("../database/database");
 const Usuario = connection.define("Usuario", {
     codigo:{
         type: Sequelize.INTEGER,
-        autoincrement: true,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
     nome:{
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(45),
         allowNull: false
     },
     email:{
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(60),
         allowNull: false
     },
     senha: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    usuariocol: {
-        type: Sequelize.STRING,
+    usuarioCol: {
+        type: Sequelize.STRING(45),
         allowNull: false
     }
 }, {freezeTableName: true,

@@ -1,0 +1,59 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+
+<body>
+    <div class="container">
+
+        <div class="card=body col-4 mt-5 ml-auto mr-auto">   
+            <form >
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" class="form-control" id="email" name=nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha (8 caracteres):</label>
+                    <input type="password" class="form-control" id="senha" name="senha" minlength="8" maxlength="8">
+                </div>
+    
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>            
+
+        </div>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- script de validação do formulário -->
+    <script>
+        var senha = document.getElementById("senha")
+        , senhaRepetir = document.getElementById("senhaRepetir");
+
+        function validarSenha(){
+        if(senha.value != senhaRepetir.value) {
+            senhaRepetir.setCustomValidity("Senhas diferentes!");
+        } else {
+            senhaRepetir.setCustomValidity('');
+        }
+        }
+
+        senha.onchange = validarSenha;
+        senhaRepetir.onkeyup = validarSenha;
+
+
+    </script>
+
+</body>
+
+
+
+
+ 
+<%- include('../partials/footer.ejs') %>

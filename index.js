@@ -4,7 +4,8 @@ const express = require("express");
 const app = express();
 const session = require('express-session');
 
-const usuariosController = require('./controllers/usuarios/UsuarioController');
+const UsuarioController = require('./controllers/UsuarioController');
+const PrincipalController = require('./controllers/PrincipalController');
 
 const connection = require('./database/database');
 const Usuario = require("./models/Usuario");
@@ -34,8 +35,11 @@ app.use(express.json());
 
 
 //rotas
-app.use('/', usuariosController);
+app.use('/', UsuarioController);
+app.use('/', PrincipalController);
 
+
+/*
 app.get("/", (req,res) => {
     res.render("index");
 });
@@ -44,6 +48,19 @@ app.get("/home", (req,res) => {
     res.render("home");
 });
 
-app.listen(8080, () => {
-    console.log("app rodando!");
+app.use("/login", (req, res) => {
+    res.render("usuario/login");
 })
+app.get("/authenticate",(req,res) => {
+    console.log(req.body.email);
+    console.log(req.body.password);
+    //autenticar
+    //res.render("userAdm");
+});
+*/
+
+
+app.listen(8080, () => {
+    console.log("app rodando porta 8080!");
+})
+
