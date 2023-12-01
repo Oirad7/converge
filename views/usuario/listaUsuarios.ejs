@@ -2,6 +2,33 @@
 <%- include('../partials/navbar.ejs') %>
 
 
+<!-- Modal -->
+<div class="modal fade" id="pesquisarModal" tabindex="-1" role="dialog" aria-labelledby="pesquisarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pesquisarModalLabel">Pesquisar Usuário</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/usuario/pesquisar" method="get">
+          <div class="modal-body">
+            <!-- Campo de Pesquisa -->
+            <div class="input-group mb-3">
+              <input type="text" id="campoPesquisa" name="termoPesquisa" class="form-control" placeholder="Digite o nome do usuário" aria-label="Recipient's username" aria-describedby="button-addon2">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
 <div class="container"></div>
 
     <h3 class="row d-flex justify-content-center">Gerenciamento de Usuários</h3>
@@ -42,42 +69,22 @@
     <div class="row d-flex justify-content-center">
 
         <a href="/usuario/cadastro"><i class="bi bi-plus-circle" style="font-size: 2rem; color: black"></i>&nbsp;&nbsp;</a>
-        <a href="!#"><i class="bi bi-search"  data-toggle="modal" data-target="#modalBusca" style="font-size: 2rem; color: black "></i>&nbsp;&nbsp;</a>
-        <% if (resultado.pagina >= 2) { %>
+        <a href="!#"><i class="bi bi-search"  data-toggle="modal" data-target="#pesquisarModal" style="font-size: 2rem; color: black "></i>&nbsp;&nbsp;</a>
+        <% if (resultado.pagina >= 2) {  %>
             <a href="/usuario/listar/page/1"><i class="bi bi-chevron-bar-left" style="font-size: 2rem; color: black "></i></a>    
             <a href="/usuario/listar/page/<%- resultado.pagina - 1 %>"><i class="bi bi-chevron-left" style="font-size: 2rem; color: black "></i></a>    
-        <% } else if (resultado.prox) { %>
+        <% } %> 
+        
+        <% if (resultado.prox) { %>
             <a href="/usuario/listar/page/<%- resultado.pagina + 1 %>"><i class="bi bi-chevron-right" style="font-size: 2rem; color: black "></i></a>
-            <a href="/usuario/listar/page/<%= resultado.pagina %>"><i class="bi bi-chevron-bar-right" style="font-size: 2rem; color: black "></i></a>
+            <a href="/usuario/listar/page/<%= resultado.pagFinal %>"><i class="bi bi-chevron-bar-right" style="font-size: 2rem; color: black "></i></a>
         <% } %>
 
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalBusca" tabindex="-1" role="dialog" aria-labelledby="Buscar usuário" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
- 
-<%- include('../partials/footer.ejs') %>    
-
-<script>
+  <!-- script botão deletar -->
+  <script>
     
     function confirmDelete(event, form){
         event.preventDefault();
@@ -87,3 +94,7 @@
         }
     }
 </script>
+
+
+
+<%- include('../partials/footer.ejs') %>    

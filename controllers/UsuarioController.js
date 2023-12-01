@@ -57,23 +57,24 @@ const bcrypt = require("bcryptjs");
   
     // ******************* paginação
     router.get("/usuario/listar/page/:num", (req, res) => {
-            var pagina = req.params.num;
+            var pagina = parseInt(req.params.num);
             var offset = 0;
+            var limite = 2;
+
             if(isNaN(pagina) || pagina == 1) {
                   offset = 0;
             }else{
-                  offset = (parseInt(pagina) - 1) * 2;
+                  offset = (pagina - 1) * limite;
             }
 
             Usuario.findAndCountAll({
-                limit:2,
+                limit:limite,
                 offset: offset,
-                order: [['nome','ASC']]
-
+                order: [['codigo','ASC']]
             }). then(usuarios => {
                 
                 var prox;
-                if (offset + 2 >= usuarios.count){
+                if (offset + limite >= usuarios.count){
                     prox = false;
                 } else{
                     prox = true;
@@ -81,7 +82,8 @@ const bcrypt = require("bcryptjs");
 
                 var resultado = {
                     prox: prox,
-                    pagina: parseInt(pagina),
+                    pagina: pagina,
+                    pagFinal: ( Math.ceil(usuarios.count / limite) ),
                     usuarios: usuarios
                 }
 
