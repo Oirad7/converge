@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); 
 
 const express = require("express");
 const app = express();
@@ -22,10 +22,10 @@ connection
 app.set('view engine', 'ejs');
 
 app.use(session({
-    secret: "lsdçqcgfegh",
+    secret: "bapbzM?r!)Ut6&7Y",
     resave: true, //novo parametro obrigatorio
     saveUninitialized: true, //novo parametro obrigatorio
-    cookie: { maxAge: 30000} //miliseg
+    cookie: { maxAge: 21600000} //miliseg 6h
 }));
 
 app.use(express.static('public'));

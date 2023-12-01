@@ -12,10 +12,21 @@
                     <h3>Login</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/authenticate" method="POST">
+                    <form action="/autenticar" method="POST">
                         <input class="form-control" name="email" placeholder="e-mail" required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" ><br>
                         <input class="form-control" name="senha" type="password" placeholder="senha" required minlength="8"><br>
                         <button type="submit" class="btn btn-success btn-block">Login</button>
+
+                        <%# **** aviso pós validação no backend **** %>
+                        <% if (mensagem) { %>
+                            
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Atenção!</strong> <%= mensagem %>.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% } %>
                     </form>
                 </div>
             </div>

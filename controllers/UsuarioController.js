@@ -1,18 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { Op } = require("sequelize");
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");
+const adminAuth = require("../middlewares/adminAuth");
 
 
-
-
-    router.get('/usuario/cadastro', (req, res) => {
+    router.get('/usuario/cadastro', adminAuth, (req, res) => {
         res.render("./usuario/cadastro.ejs",{mensagem: ""});
     });
 
     // ******************* editar:
-    router.get('/usuario/editar/:codigo', (req, res) => {
+    router.get('/usuario/editar/:codigo', adminAuth, (req, res) => {
 
         var codigo = req.params.codigo;
 
@@ -29,7 +27,7 @@ const bcrypt = require("bcryptjs");
     });
 
     // ******************* excluir:
-    router.post('/usuario/excluir', (req, res) => {
+    router.post('/usuario/excluir', adminAuth, (req, res) => {
 
             var id = req.body.id;
 
@@ -51,7 +49,7 @@ const bcrypt = require("bcryptjs");
     });        
 
     // ******************* buscar:
-    router.post("/usuario/buscar", (req, res) => {
+    router.post("/usuario/buscar", adminAuth, (req, res) => {
         
 
         var termoPesquisa = req.body.termoPesquisa;
@@ -67,7 +65,6 @@ const bcrypt = require("bcryptjs");
             if(codigoUsuario != undefined){
                         res.render("./usuario/consulta.ejs",{mensagem: "", usuario: usuario});
             }else {
-
                 res.redirect("/usuario/listar/page/1");
             }
         }).catch( err => {
@@ -76,12 +73,8 @@ const bcrypt = require("bcryptjs");
         });
     });
      
-
-
-
-  
     // ******************* paginação
-    router.get("/usuario/listar/page/:num", (req, res) => {
+    router.get("/usuario/listar/page/:num", adminAuth, (req, res) => {
             var pagina = parseInt(req.params.num);
             var offset = 0;
             var limite = 2;
@@ -120,7 +113,7 @@ const bcrypt = require("bcryptjs");
                 
 
     // ******************* adicionar
-    router.post("/usuario/adicionar", (req, res) => {
+    router.post("/usuario/adicionar", adminAuth, (req, res) => {
         var nome = req.body.nome;
         var email = req.body.email;
         var senha = req.body.senha;
@@ -155,7 +148,7 @@ const bcrypt = require("bcryptjs");
 
 
     // ******************* atualizar
-    router.post("/usuario/atualizar/:codigo", (req, res) => {
+    router.post("/usuario/atualizar/:codigo", adminAuth, (req, res) => {
         var codigo = req.params.codigo;
         var nome = req.body.nome;
         var email = req.body.email;
@@ -182,10 +175,6 @@ const bcrypt = require("bcryptjs");
             res.render('./usuario/editar/<% usuario.codigo %>', {mensagem:"ocorreu um erro: "+ err});
         });
 
-
     });
-
-
-
 
 module.exports = router;
