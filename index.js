@@ -39,27 +39,6 @@ app.use('/', UsuarioController);
 app.use('/', PrincipalController);
 
 
-/*
-app.get("/", (req,res) => {
-    res.render("index");
-});
-
-app.get("/home", (req,res) => {
-    res.render("home");
-});
-
-app.use("/login", (req, res) => {
-    res.render("usuario/login");
-})
-app.get("/authenticate",(req,res) => {
-    console.log(req.body.email);
-    console.log(req.body.password);
-    //autenticar
-    //res.render("userAdm");
-});
-*/
-
-
 app.listen(8080, () => {
     console.log("app rodando porta 8080!");
 })

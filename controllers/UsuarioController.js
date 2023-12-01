@@ -1,19 +1,18 @@
-
 const express = require("express");
 const router = express.Router();
+const { Op } = require("sequelize");
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");
 
 
 
+
     router.get('/usuario/cadastro', (req, res) => {
-        console.log("usuario cadastro");
         res.render("./usuario/cadastro.ejs",{mensagem: ""});
     });
 
     // ******************* editar:
     router.get('/usuario/editar/:codigo', (req, res) => {
-        console.log("usuario edição");
 
         var codigo = req.params.codigo;
 
@@ -31,7 +30,6 @@ const bcrypt = require("bcryptjs");
 
     // ******************* excluir:
     router.post('/usuario/excluir', (req, res) => {
-        console.log("usuario delete");
 
             var id = req.body.id;
 
@@ -53,6 +51,33 @@ const bcrypt = require("bcryptjs");
     });        
 
     // ******************* buscar:
+    router.post("/usuario/buscar", (req, res) => {
+        
+
+        var termoPesquisa = req.body.termoPesquisa;
+
+        Usuario.findOne({
+            where: {
+                nome: termoPesquisa
+            }
+        }).then(usuario => {
+            
+            var codigoUsuario = usuario.codigo;
+
+            if(codigoUsuario != undefined){
+                        res.render("./usuario/consulta.ejs",{mensagem: "", usuario: usuario});
+            }else {
+
+                res.redirect("/usuario/listar/page/1");
+            }
+        }).catch( err => {
+
+            res.redirect("/usuario/listar/page/1");
+        });
+    });
+     
+
+
 
   
     // ******************* paginação
@@ -154,7 +179,6 @@ const bcrypt = require("bcryptjs");
         }).then(() => {
             res.redirect("/usuario/listar/page/1");
         }).catch(err => {
-            console.log("erro: "+err);
             res.render('./usuario/editar/<% usuario.codigo %>', {mensagem:"ocorreu um erro: "+ err});
         });
 
